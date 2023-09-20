@@ -34,11 +34,6 @@
                   >{{ capitalize(category) }}</a
                 >
               </li>
-              <!-- <DropdownItem
-                v-for="(category, i) in categories"
-                :key="i"
-                :category="category"
-              /> -->
             </ul>
           </div>
           <div class="d-flex align-items-center justify-content-end w-100">
@@ -53,9 +48,6 @@
         </div>
       </div>
       <div class="list-task row">
-        <!-- <CardItem :task="tasks[0]" :isGrid="isGrid" />
-        <CardItem :task="tasks[1]" :isGrid="isGrid" />
-        <CardItem :task="tasks[2]" :isGrid="isGrid" /> -->
         <CardItem
           v-for="(task, i) in resultFilter"
           :key="i"
@@ -69,27 +61,44 @@
           class="add-button"
           v-if="!isCreating"
           @click="isCreating = !isCreating"
-          >Add Task</a
+          >Add New Task</a
         >
-        <div class="add-card mt-2" v-else>
+        <form v-else class="add-card mt-2" @submit.prevent="appendTask">
           <div class="card border-0 mb-2">
             <div class="card-body d-flex flex-column p-0">
               <input
                 type="text"
                 class="form-control mb-2"
                 placeholder="Title"
+                v-model="inputTitle"
+                required
               />
+              <select
+                class="form-control mb-2"
+                v-model="inputCategory"
+                required
+              >
+                <option value="">-- Select Category --</option>
+                <option
+                  v-for="(category, i) in computedCategory"
+                  :key="i"
+                  :value="category"
+                  v-show="i != 0"
+                >
+                  {{ capitalize(category) }}
+                </option>
+              </select>
               <textarea
-                id="description"
-                cols="30"
                 rows="3"
                 class="form-control small"
                 placeholder="Description"
+                v-model="inputDescription"
+                required
               ></textarea>
             </div>
           </div>
           <div class="button-wrapper d-flex">
-            <button class="btn btn-primary me-2">Save</button>
+            <button class="btn btn-primary me-2" type="submit">Save</button>
             <button
               class="btn btn-outline-secondary"
               @click="isCreating = !isCreating"
@@ -97,7 +106,7 @@
               Cancel
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -143,6 +152,11 @@ export default {
       isGrid: false,
       searchQuery: "", // penampung teks pencarian
       selectedCategory: "All",
+
+      // new input
+      inputTitle: "",
+      inputDescription: "",
+      inputCategory: "",
     };
   },
 
@@ -188,6 +202,35 @@ export default {
     //   console.log(category);
     //   return this.tasks.filter((item) => item.category == category);
     // },
+
+    appendTask() {
+      try {
+        this.tasks.push({
+          title: this.inputTitle,
+          description: this.inputDescription,
+          category: this.inputCategory,
+          isDone: false,
+        });
+
+        console.log(this.tasks);
+      } catch (error) {
+        alert("Something wrong!");
+      }
+      this.resetVModel();
+      this.resetFilter();
+    },
+
+    resetVModel() {
+      this.isCreating = !this.isCreating;
+      this.inputTitle = "";
+      this.inputDescription = "";
+      this.inputCategory = "";
+    },
+
+    resetFilter() {
+      this.selectedCategory = "All";
+      this.searchQuery = "";
+    },
   },
 };
 </script>
