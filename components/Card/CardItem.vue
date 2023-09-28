@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'item-task d-flex align-items-start border-bottom pt-3 pb-4',
+      'item-task d-flex align-items-start border-bottom pt-3 pb-4 px-0',
       isGrid ? 'col-12 col-md-6 col-lg-4' : 'col-12',
     ]"
   >
@@ -25,6 +25,11 @@
       <div class="description-task small text-muted">
         {{ task.description }}
       </div>
+      <span
+        class="badge bg-secondary link-light mt-2"
+        style="width: fit-content"
+        >{{ task.category }}</span
+      >
     </div>
   </div>
 </template>

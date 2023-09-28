@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
     <div class="container">
       <a href="#" class="navbar-brand"> Taskist </a>
       <button
