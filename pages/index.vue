@@ -25,7 +25,7 @@
               <li>
                 <a class="dropdown-item" href="#" @click="selectedCategory = ''"
                   >All</a
-                >
+                >2
               </li>
               <li v-for="(category, i) in categories" :key="i">
                 <a
@@ -335,10 +335,10 @@ export default {
 
       if (!title) {
         validation.title = "Title is required.";
-      } else if (title.length < 7) {
-        validation.title = "Title should not less than 7 characters.";
-      } else if (title.length > 75) {
-        validation.title = "Title should not more than 75 characters.";
+      } else if (title.length < 5) {
+        validation.title = "Title should not less than 5 characters.";
+      } else if (title.length > 100) {
+        validation.title = "Title should not more than 100 characters.";
       }
 
       if (!category) {
@@ -351,9 +351,9 @@ export default {
 
       if (!description) {
         validation.description = "Description is required.";
-      } else if (description.length < 20) {
+      } else if (description.length < 15) {
         validation.description =
-          "Description should not less than 20 characters.";
+          "Description should not less than 15 characters.";
       }
 
       validation.isValidated =
